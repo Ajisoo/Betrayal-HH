@@ -1,4 +1,4 @@
-package updated.data.card;
+package data.card;
 
 import java.awt.*;
 

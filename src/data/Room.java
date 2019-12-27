@@ -1,4 +1,4 @@
-package updated.data;
+package data;
 
 import updated.Debug;
 
@@ -9,16 +9,29 @@ import java.io.IOException;
 
 public class Room {
 
-    private int id;
-    private String name;
-    private int roomNum;
+    private final int id;
+    private final String name;
+    private final int roomNum;
 
     private Image image;
+    private int rotation;
+
+    public void rotate(boolean right){
+        if (right){
+            rotation++;
+            if (rotation == 4) rotation = 0;
+        }
+        else{
+            rotation--;
+            if (rotation == -1) rotation = 3;
+        }
+    }
 
     public Room(int id, String name, int roomNum){
         this.id = id;
         this.name = name;
         this.roomNum = roomNum;
+        rotation = 0;
     }
 
     public void paint(Graphics g, int x, int y, int width, int height, boolean faceUp){

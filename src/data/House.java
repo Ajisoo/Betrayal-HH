@@ -1,4 +1,4 @@
-package updated.data;
+package data;
 
 public class House {
 }

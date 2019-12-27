@@ -1,4 +1,4 @@
-package updated.data.token;
+package data.token;
 
 public interface Token {
 }
