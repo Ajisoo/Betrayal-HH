@@ -12,6 +12,7 @@ public class Debug {
     private static BufferedWriter bufferedWriter;
 
     public static boolean initialize(String fileLocation) {
+        if (fileLocation == null) return true;
         try {
             fileWriter = new FileWriter(fileLocation, true);
             bufferedWriter = new BufferedWriter(fileWriter);
@@ -35,10 +36,15 @@ public class Debug {
     public static boolean log(int status, String message) {
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         Date date = new Date();
-        try {
-            bufferedWriter.write(formatter.format(date) + " \t" + status + " \t" + message + System.getProperty("line.separator"));
-        } catch (IOException e) {
-            return false;
+        if (bufferedWriter == null){
+            System.err.print(formatter.format(date) + " \t" + status + " \t" + message + System.getProperty("line.separator"));
+        }
+        else {
+            try {
+                bufferedWriter.write(formatter.format(date) + " \t" + status + " \t" + message + System.getProperty("line.separator"));
+            } catch (IOException e) {
+                return false;
+            }
         }
         return true;
     }
