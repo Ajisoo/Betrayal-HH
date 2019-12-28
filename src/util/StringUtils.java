@@ -10,10 +10,10 @@ public class StringUtils {
     public static void drawBorderedString(JPanel p, Graphics g, String s, Color c, double x, double y, double size){
         g.setFont(new Font(FONT, Font.PLAIN, (int)(size * p.getHeight())));
         g.setColor(Color.black);
-        g.drawString(s, (int)(x * p.getWidth()) + 1, (int)(y * p.getHeight()));
-        g.drawString(s, (int)(x * p.getWidth()) - 1, (int)(y * p.getHeight()));
-        g.drawString(s, (int)(x * p.getWidth()), (int)(y * p.getHeight()) + 1);
-        g.drawString(s, (int)(x * p.getWidth()), (int)(y * p.getHeight()) - 1);
+        g.drawString(s, (int)(x * p.getWidth()) + 1, (int)(y * p.getHeight()) + 1);
+        g.drawString(s, (int)(x * p.getWidth()) - 1, (int)(y * p.getHeight()) + 1);
+        g.drawString(s, (int)(x * p.getWidth()) + 1, (int)(y * p.getHeight()) - 1);
+        g.drawString(s, (int)(x * p.getWidth()) - 1, (int)(y * p.getHeight()) - 1);
         g.setColor(c);
         g.drawString(s, (int)(x * p.getWidth()), (int)(y * p.getHeight()));
     }
@@ -29,12 +29,11 @@ public class StringUtils {
         g.setFont(f);
         double length = g.getFontMetrics(f).getStringBounds(s, g).getWidth();
         x =  x - length/2 / p.getWidth();
-        System.out.println(x);
         g.setColor(Color.black);
-        g.drawString(s, (int)(x * p.getWidth()) + 1, (int)(y * p.getHeight()));
-        g.drawString(s, (int)(x * p.getWidth()) - 1, (int)(y * p.getHeight()));
-        g.drawString(s, (int)(x * p.getWidth()), (int)(y * p.getHeight()) + 1);
-        g.drawString(s, (int)(x * p.getWidth()), (int)(y * p.getHeight()) - 1);
+        g.drawString(s, (int)(x * p.getWidth()) + 1, (int)(y * p.getHeight()) + 1);
+        g.drawString(s, (int)(x * p.getWidth()) - 1, (int)(y * p.getHeight()) + 1);
+        g.drawString(s, (int)(x * p.getWidth()) + 1, (int)(y * p.getHeight()) - 1);
+        g.drawString(s, (int)(x * p.getWidth()) - 1, (int)(y * p.getHeight()) - 1);
         g.setColor(c);
         g.drawString(s, (int)(x * p.getWidth()), (int)(y * p.getHeight()));
     }

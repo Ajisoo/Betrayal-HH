@@ -27,20 +27,20 @@ public class IThread extends Thread{
             out = new ObjectOutputStream(socket.getOutputStream());
             in = new ObjectInputStream(socket.getInputStream());
         } catch(IOException e){
-            Debug.log(2, "Error creating input/output stream in network.IThread");
+            Debug.log(2, "IThread: creating in/out");
             invalidate();
         }
     }
 
     public void invalidate(){
-        Debug.log(0, "invaliding network.IThread");
+        Debug.log(0, "invalidating IThread");
         b.getAndSet(false);
         try{
             if (in != null) in.close();
             if (out != null) out.close();
             if (socket != null) socket.close();
         } catch (IOException e){
-            Debug.log(2, "Error closing network.IThread");
+            Debug.log(2, "IThread: closing socket");
         }
         server.removeIThread(this);
     }
@@ -51,16 +51,16 @@ public class IThread extends Thread{
             try{
                 req = (Packet)in.readObject();
             } catch (IOException e){
-                Debug.log(1, "IO Exception while reading");
+                Debug.log(1, "IThread: socket closed");
                 invalidate();
                 return;
             } catch (ClassNotFoundException e){
-                Debug.log(1, "IOException while reading");
+                Debug.log(1, "IThread: ClassNotFound");
                 invalidate();
                 return;
             }
             if (req == null){
-                Debug.log(1, "network.Packet is null????");
+                Debug.log(1, "Packet is null????");
                 invalidate();
                 return;
             }
@@ -76,7 +76,7 @@ public class IThread extends Thread{
             try{
                 out.writeObject(new Packet());
             } catch (IOException e){
-                Debug.log(1, "IOException while sending response");
+                Debug.log(1, "IThread: sendBoard");
             }
     }
 }
