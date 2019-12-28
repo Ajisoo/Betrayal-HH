@@ -44,12 +44,12 @@ public class ConnectPanel extends JPanel implements ComponentListener {
                 if (text.equals("")) return;
                 if (text.indexOf(' ') != -1) return;
                 if (text.length() > 12) return;
-                c.connect(text);
                 dots = 1;
                 t.start();
                 nameField.setVisible(false);
                 connecting = true;
                 repaint();
+                c.connect(text);
             }
         });
         TextFieldUtils.setBounds(this, nameField, 0.4, 0.5 - 0.025, 0.2, 0.05);
@@ -70,6 +70,7 @@ public class ConnectPanel extends JPanel implements ComponentListener {
         nameField.setText("");
         nameField.setVisible(true);
         connecting = false;
+        t.stop();
         repaint();
     }
 

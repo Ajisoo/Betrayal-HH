@@ -11,7 +11,7 @@ import java.net.Socket;
 
 public class Client extends JFrame {
 
-    public static final String ip = "localhost";
+    public static final String ip = "70.95.161.24";
     public static final int port = 7778;
     public static final String connectPanelBackgroundImagePath = "C:\\Users\\dave\\IdeaProjects\\Betrayal HH\\connect.jpg";
 
@@ -45,32 +45,41 @@ public class Client extends JFrame {
         Debug.log(0, "Connecting with name: " + name);
         this.name = name;
 
-        try{
-            socket = new Socket(ip, port);
-            out = new ObjectOutputStream(socket.getOutputStream());
-            in = new ObjectInputStream(socket.getInputStream());
-        } catch(IOException e) {
-            Debug.log(2, "IOException creating socket");
-            try {
-                if (socket != null) socket.close();
-                if (in != null) in.close();
-                if (out != null) out.close();
-            } catch (IOException e1) {
-                Debug.log(2, "IOException closing socket");
-            }
-            ((ConnectPanel) currentPanel).reset();
-        }
-
-        Runtime.getRuntime().addShutdownHook(new Thread(){
+        new Thread(){
             public void run(){
-                try {
-                    if (socket != null) socket.close();
-                    if (in != null) in.close();
-                    if (out != null) out.close();
-                } catch (IOException e){
-                    Debug.log(2, "Error closing socket");
+                try{
+                    socket = new Socket(ip, port);
+                    out = new ObjectOutputStream(socket.getOutputStream());
+                    in = new ObjectInputStream(socket.getInputStream());
+                } catch(IOException e) {
+                    Debug.log(2, "IOException creating socket");
+                    try {
+                        if (socket != null) socket.close();
+                        if (in != null) in.close();
+                        if (out != null) out.close();
+                    } catch (IOException e1) {
+                        Debug.log(2, "IOException closing socket");
+                    }
+                    ((ConnectPanel) currentPanel).reset();
                 }
+
+                Runtime.getRuntime().addShutdownHook(new Thread(){
+                    public void run(){
+                        try {
+                            if (socket != null) socket.close();
+                            if (in != null) in.close();
+                            if (out != null) out.close();
+                        } catch (IOException e){
+                            Debug.log(2, "Error closing socket");
+                        }
+                    }
+                });
+                finishConnect();
             }
-        });
+        }.start();
+    }
+
+    public void finishConnect(){
+
     }
 }

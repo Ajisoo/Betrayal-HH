@@ -52,7 +52,8 @@ public class Server{
             try{
                 IThread newThread = new IThread(serverSocket.accept(), this);
                 clients.add(newThread);
-                newThread.run();
+                newThread.start();
+                System.out.println("Accepting client.");
             }
             catch (IOException e){
                 Debug.log(2, "Error Accepting Socket");
