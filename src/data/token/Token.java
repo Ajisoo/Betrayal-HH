@@ -1,4 +1,9 @@
 package data.token;
 
-public interface Token {
+import java.awt.image.BufferedImage;
+
+public class Token {
+
+    BufferedImage image;
+    String name;
 }

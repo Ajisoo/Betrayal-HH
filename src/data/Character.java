@@ -1,6 +1,6 @@
 package data;
 
-import updated.Debug;
+import util.Debug;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -25,10 +25,10 @@ public class Character {
     private int[] san;
     private int[] knw;
 
-    private Image image;
+    private static Image image;
 
-    public static final Character[] fullList {
-        new Character()
+    public static final Character[] fullList = {
+       // new Character()
     };
 
     public static void initialize(String path){
@@ -43,7 +43,7 @@ public class Character {
         BufferedImage tempImage = new BufferedImage(image.getWidth(null), image.getHeight(null), TYPE_4BYTE_ABGR);
         tempImage.getGraphics().drawImage(image, 0, 0 , null);
         int cornerSize = 50;
-        tempImage.setRGB(9 * imageWidth + imageWidth - i - 1, 6 * imageHeight + imageHeight - j - 1, 0x00ffffff & tempImage.getRGB(9 * imageWidth + imageWidth - i - 1, 6 * imageHeight + imageHeight - j - 1));
+        //tempImage.setRGB(9 * imageWidth + imageWidth - i - 1, 6 * imageHeight + imageHeight - j - 1, 0x00ffffff & tempImage.getRGB(9 * imageWidth + imageWidth - i - 1, 6 * imageHeight + imageHeight - j - 1));
         image = tempImage;
     }
 

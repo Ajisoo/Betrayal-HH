@@ -1,6 +1,6 @@
 package data.card;
 
-import updated.Debug;
+import util.Debug;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
