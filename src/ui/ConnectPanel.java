@@ -61,7 +61,6 @@ public class ConnectPanel extends JPanel implements ComponentListener {
                 dots++;
                 if (dots == 4) dots = 1;
                 repaint();
-                Debug.log(1, "" + dots);
             }
         });
     }

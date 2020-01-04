@@ -1,9 +1,8 @@
-package data;
+package data.BHH;
 
-import data.card.Event;
-import data.card.Item;
-import data.card.Omen;
-import data.token.Token;
+import data.BHH.card.Event;
+import data.BHH.card.Item;
+import data.BHH.card.Omen;
 
 import java.io.Serializable;
 import java.util.ArrayList;
