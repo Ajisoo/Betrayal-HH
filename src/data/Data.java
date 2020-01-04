@@ -12,6 +12,4 @@ public class Data {
 
     public Chat[] chat;
 
-    ArrayList<User> users;
-
 }

@@ -18,10 +18,10 @@ public class Server{
 
     //***********************************************************************************************************************
 
-    private ServerSocket serverSocket;
-    private Vector<User> users;
+    private final ServerSocket serverSocket;
+    private final ArrayList<User> users;
 
-    private int[] usedColors;
+    private final int[] usedColors;
 
     private Data data;
 
@@ -31,36 +31,37 @@ public class Server{
                 UPnP.closePortTCP(port);
                 if (users == null) return;
                 while (users.size() > 0){
-                    users.get(0).serverThread.invalidate();
+                    users.get(0).disconnect();
                 }
             }
         });
+
         UPnP.closePortTCP(port);
-        users = new Vector<User>();
+
+        users = new ArrayList<User>();
         usedColors = new int[COLORS.length];
 
-        try {
-            serverSocket = new ServerSocket(port);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-            try{
-                serverSocket.close();
-            } catch (IOException e1){
-                e1.printStackTrace();
-            }
-            System.exit(1);
-        }
-
+        serverSocket = getServerSocket(port);
         System.out.println("Server waiting for client on port " + serverSocket.getInetAddress().getHostAddress() + ":" +  serverSocket.getLocalPort());
     }
 
-    void acceptClients(){
+    private ServerSocket getServerSocket(int port){
+        try {
+            return new ServerSocket(port);
+        }
+        catch (IOException e) {
+            System.exit(1);
+        }
+        return null;
+    }
+
+    private void acceptClients(){
         while (true){
             try{
-                ServerThread newThread = new ServerThread(serverSocket.accept(), this);
-                users.add(new User(newThread, generateColor()));
-                newThread.start();
+                User newUser = new User(serverSocket.accept(), this, generateColor());
+                synchronized(users){
+                    users.add(newUser);
+                }
                 System.out.println("Accepting client.");
             }
             catch (IOException e){
@@ -69,31 +70,31 @@ public class Server{
         }
     }
 
-    void removeIThread(ServerThread client){
-        int i;
-        for (i = 0; i < users.size(); i++){
-            if (users.get(i).serverThread == client) break;
+    void removeUser(User user){
+        synchronized(users) {
+            users.remove(user);
         }
-        for (int j = 0; j < COLORS.length; j++){
-            if (users.get(i).color == COLORS[j]) usedColors[j]--;
+
+        for (int i = 0; i < COLORS.length; i++) {
+            if (user.color == COLORS[i]) {
+                synchronized(usedColors){
+                    usedColors[i]--;
+                }
+            }
         }
-        users.remove(i);
     }
 
     private Color generateColor(){
         int min = 99;
+        int index = -1;
         synchronized(usedColors) {
             for (int i = 0; i < COLORS.length; i++) {
-                if (usedColors[i] < min) min = usedColors[i];
-            }
-
-            while (true) {
-                int index = (int) (Math.random() * COLORS.length);
-                if (usedColors[index] == min) {
-                    usedColors[index]++;
-                    return COLORS[index];
+                if (usedColors[i] < min) {
+                    index = i;
+                    min = usedColors[i];
                 }
             }
+            return COLORS[index];
         }
     }
 

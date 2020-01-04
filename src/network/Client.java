@@ -1,6 +1,5 @@
 package network;
 
-import data.BHH.Board;
 import ui.ConnectPanel;
 import ui.MainPanel;
 import util.Debug;
@@ -19,12 +18,9 @@ public class Client extends JFrame {
 
     public static void main(String[] args){
         Client c = new Client();
-        c.setVisible(true);
     }
 
     //***********************************************************************************************************************
-
-    String name;
 
     Socket socket;
     ObjectInputStream in;
@@ -35,8 +31,6 @@ public class Client extends JFrame {
     ConnectPanel connectPanel;
     MainPanel mainPanel;
 
-    Board b;
-
     public Client(){
         super();
         setLocation(320,0);
@@ -46,6 +40,7 @@ public class Client extends JFrame {
         connectPanel = new ConnectPanel(this, connectPanelBackgroundImagePath);
         currentPanel = connectPanel;
         setContentPane(connectPanel);
+        setVisible(true);
     }
 
     public void connect(final String name){
